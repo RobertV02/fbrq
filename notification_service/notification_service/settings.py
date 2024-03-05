@@ -67,11 +67,11 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_BEAT_SCHEDULE = {
     'run-every-minute': {
         'task': 'notifications.test.my_task',  # Путь к вашей задаче
-        'schedule': 30.0,  # Интервал в секундах (в данном случае каждая минута)
+        'schedule': 60.0,  # Интервал в секундах (в данном случае каждая минута)
     },
     'email_send': {
         'task': 'notifications.test.send_email',  # Путь к вашей задаче
-        'schedule': 40.0,  # Интервал в секундах (в данном случае каждая минута)
+        'schedule': 60*60*24,  # Интервал в секундах (в данном случае каждая минута)
     },
 }
 

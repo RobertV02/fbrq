@@ -7,14 +7,13 @@ from dotenv import load_dotenv
 from django.utils import timezone
 from notifications.models import Dispatch, Client, Message
 import requests
-import logging
 from datetime import datetime
 
 
 app = Celery('tasks', broker='redis://localhost:6379/0')
 load_dotenv()
 success_msg = 0
-# Конфигурируем логгер
+
 
 def log_message_dispatch_info(dispatch_id, sent_time, client_id, message_id):
     log_message = f"Dispatch ID: {dispatch_id}, Message ID: {message_id}, Sent Time: {sent_time}, Client ID: {client_id}"
@@ -43,7 +42,7 @@ def send_email(result = None):
     message["From"] = sender_email
     message["To"] = receiver_email
 
-    text = f"Result of my_task: "
+    text = f"Result of my_task"
     html = f"<p>Result of my_task: {success_msg} Выполненных рассылок за сегодня</p>"
 
     part1 = MIMEText(text, "plain")
@@ -52,6 +51,7 @@ def send_email(result = None):
     message.attach(part1)
     message.attach(part2)
 
+    #В данном случае используется ЯНДЕКС почта
     with smtplib.SMTP_SSL("smtp.yandex.com", 465) as server:
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, message.as_string())
