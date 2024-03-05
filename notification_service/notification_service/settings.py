@@ -71,7 +71,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'email_send': {
         'task': 'notifications.test.send_email',  # Путь к вашей задаче
-        'schedule': 60*60*24,  # Интервал в секундах (в данном случае каждая минута)
+        'schedule': 60*60*24,  # Интервал в секундах (в данном случае каждый день)
     },
 }
 
